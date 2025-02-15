@@ -197,7 +197,9 @@ This does the following:
 UPDATE mysql.user SET Hosts='localhost' WHERE User='root';
 FLUSH PRIVILEGES;
 ```
-
+Breakdown:
+- mysql.user - This is a built-in table in MySQL that stores details about all MySQL users, including usernames, authentication methods, privileges, host access, etc.
+- SET Host='localhost' - the Host 
 
 
 
