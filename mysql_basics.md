@@ -10,3 +10,28 @@
   - https://www.w3schools.com/MySQL/default.asp
 
 # Installing & Managing MySQL
+
+## Installation & Service Management (Linux)
+```
+sudo apt install mysql-server -y
+sudo systemctl status mysql
+sudo systemctl start mysql
+sudo systemctl enable mysql
+```
+These lines do the following:
+- Installs MySQL
+- Checks the MySQL service status
+- Starts MySQL service
+- Enables MySQL service (starts on boot)
+
+```
+sudo mysql
+```
+This will open a MySQL as root
+
+# Basic MySQL Commands
+
+
+
+
+
