@@ -199,7 +199,34 @@ FLUSH PRIVILEGES;
 ```
 Breakdown:
 - mysql.user - This is a built-in table in MySQL that stores details about all MySQL users, including usernames, authentication methods, privileges, host access, etc.
-- SET Host='localhost' - the Host 
+- SET Host='localhost' - the Host from which the user can connect to MySQL.
+
+### Enforcing Strong Passwords
+```
+INSTALL PLUGIN validate_password SONAME 'validate_password.so';
+```
+Breakdown:
+- INSTALL PLUGIN - Installs a plugin
+- validate_password - name of the plugin that enforces strong password policies
+- SONAME 'validate_password.so' - specifies the object file that contains the plugin's implementation.
+
+To check if plugin is installed:
+```
+SELECT * FROM information_schema.plugins WHERE PLUGIN_NAME = 'validate_password';
+```
+
+To uninstall the plugin:
+```
+UNINSTALL PLUGIN validate_password;
+```
+To check current configuration:
+```
+SHOW VARIABLES LIKE 'validate_password%';
+```
+
+
+
+
 
 
 
