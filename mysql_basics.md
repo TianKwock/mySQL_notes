@@ -88,6 +88,117 @@ It is generally best practice to specify columns, like so:
 INSERT INTO Users (id, username) VALUES (2, 'Caleb');
 ```
 
+### Retrieving Data
+```
+SELECT * FROM {name};  # Selects all columns
+SELECT {field} from {name];  # Selects only the specified column
+SELECT * FROM {name} WHERE {field} = {value};  # Filers rows where the field matches the value
+```
+Example:
+```
+SELECT * FROM Users WHERE id = 1;
+```
+This will only show me rows where the id = 1. 
+
+More Filtering:
+```
+SELECT * FROM {name} WHERE {field} = {value} OR {field} = {value};
+SELECT {field} from {name} WHERE {field} < {value};  # Retrieves rows meeting the condition
+SELECT {field} FROM {name} WHERE NOT {field} = {value};  # Excludes fields with that value
+```
+Example:
+```
+SELECT * FROM Users WHERE username = 'Tian' OR username = 'Caleb';
+SELECT username from Users WHERE id < 20;
+SELECT username FROM Users WHERE NOT id = 2;
+```
+
+### Updating & Deleting Data
+```
+UPDATE {name} SET {field} = {value} WHERE {other field} = {other value};  # Modifies data according to a condition
+DELETE FROM {name} WHERE {field} = {value};  # Deletes a specfic row
+```
+Example:
+```
+UPDATE Users SET username = 'Tian' WHERE id = 1;  # For rows where the id = 1, make the username 'Tian"
+DELETE FROM Users WHERE id = 2;  # Deletes rows with id = 2
+```
+
+### Sorting Data
+```
+SELECT * FROM {name] ORDER BY {field} ASC;  # Orders results in ascending order
+SELECT * FROM {name] ORDER BY {field} DESC;  # Orders results in descending order
+```
+
+### Altering Tables
+```
+ALTER TABLE {name} ADD {new field} {DATA_TYPE};  # Adds a new column
+UPDATE {name} SET {new field} = {value} WHERE {field} = {value};  # Updates field values
+```
+Example:
+```
+ALTER TABLE Users ADD beard BOOLEAN;
+UPDATE Users SET beard = FALSE WHERE username = 'Tian';
+```
+Tian does not have a beard, so set that beard boolean to false. 
+
+# User Management
+
+### Creating & Granting Permissions
+
+Creating an admin:
+```
+CREATE USER {user}@{machine} IDENTIFIED BY {password};
+GRANT ALL PRIVILEGES ON *.* TO {user}@{machine} WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+```
+Breakdown:
+- ALL PRIVILEGES - exactly what it sounds like, this user can do anything with the database
+- WITH GRANT OPTION - this user can grant the same privileges to other users
+- FLUSH PRIVILEGES - command to tell MySQL to reload the grant tables (storing user privileges) so your changes take effect
+
+Example:
+```
+CREATE USER 'admin'@'localhost' IDENTIFIED BY 'SecurePass123!';
+GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+```
+
+# Backing Up & Restoring Databases
+```
+mysqldump -u {user} -p {name} > backup.sql  # backup the database
+mysql -u {user} -p {name} < backup.sql  # restore the database
+```
+Breakdown:
+- mysqldump - command-line utility to create backups of MySQL databases. It will generate a .sql file that contains the SQL statements necessary to recreate the database.
+- < -p > - tag to prompt for password of the user.
+
+Example:
+```
+mysqldump -u root -p Users > backup.sql
+mysqldump -u root -p Users < backup.sql
+```
+
+# Security Considerations
+
+### Securing MySQL Installation
+```
+mysql_secure_installation  # Runs security configuration
+```
+This does the following:
+- Set the root password (if current password is not set or weak) 
+- Remove anonymous users (MySQL allows anonymous users by default)
+- Disable remote root login (local machine only)
+- Remove test databse (which anyone can access)
+- Reload privilege tables (to apply changes immediately)
+
+### Disabling Remote Root Login
+```
+UPDATE mysql.user SET Hosts='localhost' WHERE User='root';
+FLUSH PRIVILEGES;
+```
+
+
 
 
 
