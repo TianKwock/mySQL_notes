@@ -215,14 +215,107 @@ To check if plugin is installed:
 SELECT * FROM information_schema.plugins WHERE PLUGIN_NAME = 'validate_password';
 ```
 
-To uninstall the plugin:
+To uninstall the plugin (WARNING: will remove password requirements)
 ```
 UNINSTALL PLUGIN validate_password;
 ```
+
 To check current configuration:
 ```
 SHOW VARIABLES LIKE 'validate_password%';
 ```
+
+#### Changing password policy settings: 
+
+Set Password Policy Level:
+```
+SET GLOBAL validate_password_policy = '{LEVEL}';  # LOW, MEDIUM, or STRONG
+```
+LOW - enforces password length
+MEDIUM - requires length, uppercase, lowercase, numbers, and special characters by default
+STRONG - includes dictionary check 
+
+Change Minimum Password Length:
+```
+SET GLOBAL validate_password_length = {length];
+```
+
+Require at least X uppercase and lowercase letters:
+```
+SET GLOBAL validate_password_mixed_case_count = {min};
+```
+
+Require at least X digits:
+```
+SET GLOBAL validate_password_number_count = {min};
+```
+
+Require at least X special characters:
+```
+SET GLOBAL validate_password_special_char_count = {min};
+```
+
+### Restricting Access to MySQL Directory:
+```
+sudo chmod -R 750 /var/lib/mysql/
+```
+
+### Enabling logging & auditing:
+In bash:
+```
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+```
+Add:
+```
+log_error = /var/log/mysql/error.log
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2
+```
+Restart the service:
+```
+sudo systemctl restart mysql
+```
+
+# Troubleshooting
+
+Checking service status:
+```
+systemctl status mysql  # Check if running
+sudo systemctl restart mysql  # Restart the service (optional)
+```
+Checking Open Ports
+```
+sudo ss -tulpn | grep mysql
+``` 
+Checking Config File for Errors
+```
+mysqld --verbose --help | grep -E "Default options|/etc"
+```
+#### Resetting MySQL Root Password 
+Bash:
+```
+sudo systemctl stop mysql  # Stop the service 
+sudo mysqld_safe --skip-grant-tables &  # Disables MySQL authentication, which allows anyone to log in as any user without a password
+sudo mysql -u root  # Log in as root
+```
+SQL:
+```
+UPDATE mysql.user SET authentication_string=PASSWORD('{new password}') WHERE User='root';
+FLUSH PRIVILEGES;
+```
+Bash:
+```
+sudo systemctl restart mysql
+```
+
+
+
+
+
+
+
+
 
 
 
