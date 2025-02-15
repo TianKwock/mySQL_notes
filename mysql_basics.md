@@ -26,6 +26,15 @@ sudo mysql  # Opens a MySQL shell as root
 
 # Basic MySQL Commands
 
+### Logging in
+```
+mysql -h {host} -u {user} -p
+```
+If you are logging in on the same machine that MySQL is running, you can omit the host:
+```
+mysql -u {user} -p
+```
+
 ### Working with Databases
 ```
 SHOW DATABASES;  # List all databses
