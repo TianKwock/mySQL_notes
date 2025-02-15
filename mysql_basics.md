@@ -11,7 +11,7 @@
 
 # Installing & Managing MySQL
 
-## Installation & Service Management (Linux)
+### Installation & Service Management (Linux)
 ```
 sudo apt install mysql-server -y
 sudo systemctl status mysql
@@ -31,7 +31,15 @@ This will open a MySQL as root
 
 # Basic MySQL Commands
 
-
+### Working with Databases
+```
+SHOW DATABASES; # List all databses
+CREATE DATABASE {name};
+USE {name};
+DROP DATABASE {name};
+```
+- List all databases
+- 
 
 
 
