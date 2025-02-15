@@ -1,7 +1,5 @@
 # General Notes
 
----
-
 - DMBS (Database Management System) is a software that manages databases (e.g. MySQL).
 - RDBMS (Relational Databse Management System) is a DBMS that uses a relational model (tables, keys, etc).
   - Vs. non-relational (e.g NoSQL)
@@ -10,7 +8,5 @@
 - Useful Resources:
   - https://dev.mysql.com/doc/
   - https://www.w3schools.com/MySQL/default.asp
-
----
 
 # Installing & Managing MySQL
